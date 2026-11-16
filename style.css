@@ -1,0 +1,413 @@
+/* =============================================================
+   STYLE.CSS — Personnalisations et animations
+   Portfolio de Massandie Koné
+   -------------------------------------------------------------
+   Astuce : toutes les couleurs sont regroupées dans :root.
+   Change une valeur ici et elle change partout sur la page.
+   ============================================================= */
+
+/* ----- 1. Couleurs et variables ----- */
+:root {
+  --night: #070816;          /* fond bleu nuit très profond */
+  --night-2: #0d1030;        /* bleu nuit un peu plus clair */
+  --ink: #eef0ff;            /* texte principal */
+  --ink-soft: #a9aed6;       /* texte secondaire */
+  --ink-faint: #6b7099;      /* texte discret */
+  --violet: #8b5cf6;         /* violet principal */
+  --blue: #3b82f6;           /* bleu principal */
+  --pink: #d946ef;           /* touche rosée */
+  --line: rgba(255, 255, 255, 0.08);
+  --glass: rgba(255, 255, 255, 0.04);
+
+  --gradient: linear-gradient(120deg, #a78bfa 0%, #818cf8 45%, #60a5fa 100%);
+  --font-display: "Sora", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+}
+
+/* Classes utilitaires simples (utilisées dans le HTML) */
+.bg-night { background-color: var(--night); }
+.text-ink { color: var(--ink); }
+.text-ink-soft { color: var(--ink-soft); }
+.text-ink-faint { color: var(--ink-faint); }
+.font-display { font-family: var(--font-display); }
+
+/* ----- 2. Base ----- */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(139, 92, 246, 0.45); color: #fff; }
+
+/* ----- 3. Décor de fond ----- */
+.decor {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at top, var(--night-2) 0%, var(--night) 65%);
+}
+
+/* Grille fine qui s'estompe vers les bords */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+  opacity: 0.5;
+}
+
+/* Halos lumineux flous */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.orb-violet {
+  width: 520px; height: 520px;
+  top: -140px; left: -120px;
+  background: var(--violet);
+  animation: float-a 16s ease-in-out infinite;
+}
+.orb-blue {
+  width: 460px; height: 460px;
+  bottom: -160px; right: -100px;
+  background: var(--blue);
+  animation: float-b 18s ease-in-out infinite;
+}
+.orb-pink {
+  width: 280px; height: 280px;
+  top: 40%; left: 55%;
+  background: var(--pink);
+  opacity: 0.25;
+  animation: float-a 20s ease-in-out infinite reverse;
+}
+
+/* Grain léger pour une finition « premium » */
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ----- 4. En-tête ----- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 0.8rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--gradient);
+  box-shadow: 0 8px 24px -8px rgba(139, 92, 246, 0.7);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.status-dot {
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+  animation: pulse 2.2s infinite;
+}
+
+/* ----- 5. Textes du hero ----- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #aeffa5;
+}
+.eyebrow-line {
+  width: 2.5rem; height: 1px;
+  background: var(--gradient);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 7.5vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+/* Le prénom en italique élégant avec dégradé animé */
+.name-accent {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.12em;
+  letter-spacing: -0.01em;
+  padding-right: 0.08em;
+  background: linear-gradient(120deg, #c4b5fd, #818cf8, #60a5fa, #c4b5fd);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+/* ----- 6. Bouton principal lumineux ----- */
+.glow-btn {
+  /* --x et --y sont mises à jour par script.js (position de la souris) */
+  --x: 50%;
+  --y: 50%;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #fff;
+  text-decoration: none;
+  background: var(--gradient);
+  box-shadow:
+    0 10px 30px -10px rgba(139, 92, 246, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+/* Tache de lumière qui suit la souris */
+.glow-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(160px circle at var(--x) var(--y), rgba(255, 255, 255, 0.45), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* Halo extérieur flou */
+.glow-btn::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -2;
+  border-radius: inherit;
+  background: var(--gradient);
+  filter: blur(18px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.glow-btn:hover {
+  box-shadow:
+    0 18px 50px -12px rgba(139, 92, 246, 0.95),
+    0 0 40px -6px rgba(96, 165, 250, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.glow-btn:hover::before { opacity: 1; }
+.glow-btn:hover::after { opacity: 0.7; }
+.glow-btn:active { transform: scale(0.97); }
+.glow-btn:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 4px;
+}
+.glow-btn-arrow { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.glow-btn:hover .glow-btn-arrow { transform: translateX(4px); }
+
+/* Petites étiquettes de compétences */
+.chip {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--glass);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.chip:hover { border-color: rgba(167, 139, 250, 0.5); color: var(--ink); }
+
+/* ----- 7. Carte de code décorative ----- */
+.code-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(16px);
+  box-shadow: 0 30px 80px -30px rgba(59, 130, 246, 0.45);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Fin liseré dégradé autour de la carte */
+.code-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(140deg, rgba(167, 139, 250, 0.6), transparent 40%, transparent 60%, rgba(96, 165, 250, 0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.code-card-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+.dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; }
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+
+.code-content {
+  margin: 0;
+  padding: 1.4rem 1.3rem 1.6rem;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: clamp(0.74rem, 1.6vw, 0.88rem);
+  line-height: 1.8;
+  color: var(--ink-soft);
+  white-space: pre;
+  overflow-x: auto;
+}
+.c-key { color: #c084fc; }
+.c-var { color: #93c5fd; }
+.c-prop { color: #e0e7ff; }
+.c-str { color: #a5b4fc; }
+.c-bool { color: #f0abfc; }
+.c-fn { color: #67e8f9; }
+.cursor {
+  display: inline-block;
+  width: 0.55em; height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -0.2em;
+  background: #a78bfa;
+  animation: blink 1s steps(1) infinite;
+}
+
+.float-badge {
+  position: absolute;
+  bottom: -1.2rem;
+  left: -1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: rgba(13, 16, 48, 0.85);
+  backdrop-filter: blur(12px);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  box-shadow: 0 16px 40px -16px rgba(139, 92, 246, 0.6);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.float-badge span:first-child { color: #c4b5fd; }
+
+/* ----- 8. Notification (toast) ----- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 50;
+  max-width: calc(100% - 2rem);
+  padding: 0.9rem 1.3rem;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: 999px;
+  background: rgba(13, 16, 48, 0.92);
+  backdrop-filter: blur(12px);
+  color: var(--ink);
+  font-size: 0.9rem;
+  text-align: center;
+  box-shadow: 0 20px 50px -20px rgba(139, 92, 246, 0.8);
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ----- 9. Animation d'apparition (activée par script.js) ----- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; filter: none; }
+
+/* ----- 10. Keyframes (les animations) ----- */
+@keyframes float-a {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 40px 30px; }
+}
+@keyframes float-b {
+  0%, 100% { translate: 0 0; }
+  50% { translate: -50px -30px; }
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ----- 11. Responsive (compléments à Tailwind) ----- */
+@media (max-width: 640px) {
+  .orb-violet { width: 320px; height: 320px; }
+  .orb-blue { width: 300px; height: 300px; }
+  .orb-pink { display: none; }
+  .float-badge { left: 0.75rem; }
+  .glow-btn { width: 100%; justify-content: center; }
+}
+
+/* ----- 12. Accessibilité : moins d'animations si demandé ----- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
